@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% block contenido %}
+<h1>🔗 Acortador de URLs</h1>
+<p class="sub">Convierte enlaces largos en enlaces cortos y cuenta sus visitas.</p>
+<form method="post">
+  <input name="url" type="url" placeholder="https://ejemplo.com/un/enlace/muy/largo" required>
+  <input name="alias" placeholder="Alias personalizado (opcional)">
+  <button type="submit">Acortar</button>
+</form>
+{% if error %}<p class="err">{{ error }}</p>{% endif %}
+{% if creado %}<p class="ok">Tu enlace: <a href="{{ creado.url_corta }}">{{ creado.url_corta }}</a></p>{% endif %}
+{% if recientes %}
+<table>
+  <tr><th>Código</th><th>Destino</th><th>Visitas</th></tr>
+  {% for e in recientes %}
+  <tr><td><a href="{{ url_corta(e.codigo) }}">{{ e.codigo }}</a></td><td class="url">{{ e.url }}</td><td>{{ e.visitas }}</td></tr>
+  {% endfor %}
+</table>
+{% endif %}
+{% endblock %}
